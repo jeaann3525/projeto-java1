@@ -1,81 +1,61 @@
-package br.com.petshopp ;
+package br.com.petshop;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Petshopp  {
+public class PetShop {
 
 	public static void main(String[] args) {
-		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		ArrayList<Animal> animais = new ArrayList<>();
 		int opcao;
 
-		
 		do {
-			System.out.println("\n=== MENU ===");
-			System.out.println("1 - Cadastrar Cachorro");
-			System.out.println("2 - Cadastrar Gato");
-			System.out.println("3 - Exibir animais");
-			System.out.println("4 - Sair");
-			System.out.println("escolha uma opção");
+			System.out.println("\n======================\n CADASTRO DE ANIMAIS\n======================\n");
+			System.out.println("[1] - CADASTRAR CACHORRO");
+			System.out.println("[2] - CADASTRAR GATO");
+			System.out.println("[3] - CADASTRAR PÁSSAROS");
+			System.out.println("[4] - EXIBIR CADASTROS");
+			System.out.println("[5] - SAIR\n");
+			System.out.print("[OPÇÃO]: ");
 			opcao = scanner.nextInt();
 			scanner.nextLine();
 
 			switch (opcao) {
-
 			case 1:
-				boolean isValid = false;
-				
-				System.out.println("Nome do Cachorro;");
-				String nomeCachorro = scanner.nextLine();
-				
-				while (!isValid) {					
-				
-				 if (nomeCachorro.matches("[a-zA-Z]+")) {
-		                isValid = true;
-				  } else {
-		                System.out.println("Entrada inválida. Por favor, digite apenas letras.");
-		                nomeCachorro = scanner.nextLine();
-		            }
-				 
-		        }
-				System.out.println("Idade do Cachorro:");
-				int idadeCachorro = scanner.nextInt();
-				scanner.nextLine();
-				System.out.println("Raça do Cachorro: ");
-				String raca = scanner.nextLine();
-				animais.add(new Cachorro(nomeCachorro, idadeCachorro, raca));
-				System.out.println("Cachorro cadastrado com sucesso.");
+				Cadastro cadastro = new Cadastro(scanner, animais);
+				cadastro.cadastroCachorro();
 				break;
-
 			case 2:
-				System.out.println("Nome do Gato: ");
-				String nomeGato = scanner.nextLine();
-				System.out.println("Idade do Gato: ");
-				int idadeGato = scanner.nextInt();
-				scanner.nextLine();
-				System.out.println("Cor do pelo do Gato: ");
-				String corPelo = scanner.nextLine();
+				String nomeGato = Validacao.validarS(scanner, "NOME:");
+				String corPelo = Validacao.validarS(scanner, "COR DO PELO:");
+				int idadeGato = Validacao.validarI(scanner, "IDADE:");
 				animais.add(new Gato(nomeGato, idadeGato, corPelo));
-				System.out.println("Gato cadastrado com sucesso!");
+				System.out.print("✅ GATO CADASTRADO.");
 				break;
-
 			case 3:
-				System.out.println("\nLista de animais");
-				for (Animal animal : animais) {
-					animal.exibirInfo();
-				}
-				break;
+				String nomePassaro = Validacao.validarS(scanner, "NOME:");
+				String racap = Validacao.validarS(scanner, "RAÇA:");
+				int idadePassaro = Validacao.validarI(scanner, "IDADE:");
+				animais.add(new Passaro(nomePassaro, idadePassaro, racap));
+				System.out.print("✅ PÁSSARO CADASTRADO.");
+				break;		
 				
 			case 4:
-				System.out.println("Encerrando o programa...");
+				System.out.println("\n===  LISTA DE CADASTROS  ===");
+				for (Animal animal : animais) {
+					System.out.println();
+					animal.exibirInfo();
+					System.out.println();
+					System.out.printf("=--------------------=\n");
+				}
+				break;
+			case 5:
+				System.out.println("ENCERRANDO...");
 				break;
 			default:
-				System.out.println("Opção inválida! Tente novamente.");
+				System.out.println("❌ [INVÁLIDO] TENTE NOVAMENTE.");
 				break;
 			}
-
-		} while (opcao != 4);
-
-	}
+		} while (opcao != 5);
+		scanner.close();
