@@ -1,4 +1,4 @@
-package br.com.petshopp;
+package br.com.petshop;
 
 public class Gato extends Animal{
 	private String corPelo;
@@ -9,12 +9,13 @@ public class Gato extends Animal{
 	}
 	
 	public void miar() {
-		System.out.println(getNome() + " está miando: Miau Miau!");
+		System.out.println(getNome() + " ESTÁ MIANDO: MIAU MIAU!");
 	}
 	
 	public void exibirInfo() {
+		System.out.println("\n[GATO]");
 		super.exibirInfo();
-		System.out.println("Cor do Pelo" + corPelo);
+		System.out.println("COR DO PELO: " + corPelo);
+		miar();
 	}
 }
-
